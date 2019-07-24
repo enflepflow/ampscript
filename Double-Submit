@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+      <!-- Button Styles -->
+<style>
+    body {
+        font-family: 'Open Sans', Arial;
+    }
+    
+.btn-primary {
+ background-color: #002855;
+ border-color: #002855;
+}
+.btn-primary:hover {
+ background-color: #fff;
+ border-color: #fff;
+ color: #d0d2d2;
+}
+.btn-secondary {
+ background-color: #00a9e0;
+ border-color: #00a9e0;
+}
+.btn-secondary:hover {
+ background-color: #fff;
+ border-color: #fff;
+ color: #d0d2d2;
+}
+.btn-outline-light:hover {
+ color: #d0d2d2;
+}
+
+@media only screen and (max-width:480px){
+/* MOBILE GLOBAL STYLES - DO NOT CHANGE */
+body, .tb_properties{font-family: Arial !important; font-size: 16px !important; color: #808080 !important; line-height: 1 !important; padding: 0px !important; }.buttonstyles{font-family: Arial !important; font-size: 16px !important; color: #FFFFFF !important; padding: 0px !important; }h1{font-family: Arial !important; font-size: 22px !important; color: #202020 !important; line-height: 1 !important; }h2{font-family: Arial !important; font-size: 20px !important; color: #202020 !important; line-height: 1 !important; }h3{font-family: Arial !important; font-size: 18px !important; color: #202020 !important; line-height: 1 !important; }a:not(.buttonstyles){line-height: 1 !important; }.mobile-hidden{display: none !important; }.responsive-td {width: 100% !important; display: block !important; padding: 0 !important;}
+/* END OF MOBILE GLOBAL STYLES - DO NOT CHANGE */
+}</style>
+      
+      <!-- Form Styles -->
+<style>
+        label {
+            color: #00a9e0;
+            text-transform: uppercase;
+            margin-bottom: -1%;
+            font-size: .7rem;
+            font-weight: bold;
+            font-family; 'Open Sans', Arial;
+        }
+      .form-control-lg {
+        border-radius: 0px
+    }
+    </style>
+
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+
+    
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-6">
+                                %%[
+
+if RequestParameter("Lead_Type__c") == "Online" then
+
+var @payload, @response, @FirstName, @LastName, @Loan_Amount__c, @Property_State__c, @LOAN_PURP, @Channel__c, @Subservicer_Name__c, @Campaign_Identifier__c, @Jornaya_ID__c, @lead_id_tcpa_disclosure, @sf_link, @url
+
+set @Email = RequestParameter("Email")
+set @FirstName = RequestParameter("FirstName")
+set @LastName = RequestParameter("LastName")
+set @Loan_Amount__c = RequestParameter("Loan_Amount__c"),
+set @Property_State__c = RequestParameter("Property_State__c")
+set @LOAN_PURP = RequestParameter("LOAN_PURP")
+set @Channel__c = RequestParameter("Channel__c")
+set @Subservicer_Name__c = RequestParameter("Subservicer_Name__c")
+set @Campaign_Identifier__c = RequestParameter("Campaign_Identifier__c")
+set @Jornaya_ID__c = RequestParameter("Jornaya_ID__c")
+set @lead_id_tcpa_disclosure = RequestParameter("lead_id_tcpa_disclosure")
+
+
+set @payload = ''
+
+set @url = Concat("URL", "&Email=", @email, "&FirstName=", @FirstName, "&LastName=", @LastName, "&Loan_Amount__c=", @Loan_Amount__c, "&Property_State__c=", @Property_State__c, "&LOAN_PURP=", @LOAN_PURP, "&Channel__c=", @Channel__c, "&Subservicer_Name__c=", @Subservicer_Name__c, "&Campaign_Identifier__c=", @Campaign_Identifier__c,  "&Jornaya_ID__c=", @Jornaya_ID__c,  "&lead_id_tcpa_disclosure=", @lead_id_tcpa_disclosure)
+
+set @request = HTTPPost(@url,"application/json", @payload, @response)
+
+
+
+endif ]%%
+
+
+                
+
+
+                
+                %%[
+
+if RequestParameter("Lead_Type__c") == "Online" then
+
+  InsertData(
+        "Submission Attempts",
+        "Email", RequestParameter("Email"),
+        "FirstName", RequestParameter("FirstName"),
+        "LastName", RequestParameter("LastName"),
+        "Loan_Amount__c", RequestParameter("Loan_Amount__c"),
+        "Property_State__c", RequestParameter("Property_State__c"),
+        "LOAN_PURP", RequestParameter("LOAN_PURP"),
+        "Channel__c", RequestParameter("Channel__c"),
+        "Subservicer_Name__c", RequestParameter("Subservicer_Name__c"),
+        "Campaign_Identifier__c", RequestParameter("Campaign_Identifier__c"),
+        "Jornaya_ID__c", RequestParameter("Jornaya_ID__c"),
+        "lead_id_tcpa_disclosure", RequestParameter("lead_id_tcpa_disclosure")
+       )
+
+endif
+
+]%%
+                
+ %%[ if RequestParameter("Lead_Type__c") == "Online" then ]%%
+ 
+ <p>
+   Thank you for your submission
+                </p> 
+                
+status code: %%=v(@request)=%%
+<br><br>response: %%=v(@response)=%%
+ %%[ else ]%%
+        
+                
+<form  action="%%=RequestParameter('URL')=%%" method="POST">
+    <div><input id="Subservicer_Name__c" name="Subservicer_Name__c" type="hidden" value="SMS"/></div><br>
+    <div><input id="Lead_Type__c" name="Lead_Type__c" type="hidden" value="Online"/></div>
+    <div><input id="Channel__c" name="Channel__c" type="hidden" value="R1"/></div>
+    <div><input id="LOAN_PURP" name="LOAN_PURP" type="hidden" value="Refinance"/></div>
+   <div class="form-group"> <!-- Full Name -->
+  <label for="Campaign_Identifier__c" class="control-label">Campaign_Identifier__c <span style="color: #920040; font-weight: bold;">*</span></label>
+  <input type="text" class="form-control-lg form-inline w-100" id="Campaign_Identifier__c" name="Campaign_Identifier__c" placeholder="" required>
+ </div> 
+ <div class="form-group"> <!-- Full Name -->
+  <label for="FirstName" class="control-label">First Name <span style="color: #920040; font-weight: bold;">*</span></label>
+  <input type="text" class="form-control-lg form-inline w-100" id="FirstName" name="FirstName" placeholder="" required>
+ </div> 
+
+ <div class="form-group"> <!-- Street 1 -->
+  <label for="Last Name" class="control-label">Last Name <span style="color: #920040; font-weight: bold;">*</span></label>
+  <input type="text" class="form-control-lg form-inline w-100" id="street1_id" name="LastName" placeholder="" required>
+ </div> 
+    
+     <div class="form-group"> <!-- Street 1 -->
+  <label for="Email" class="control-label">Email <span style="color: #920040; font-weight: bold;">*</span></label>
+  <input type="email" class="form-control-lg form-inline w-100" id="Email" name="Email" placeholder="" required>
+ </div> 
+       
+ <div class="form-group"> <!-- Street 2 -->
+  <label for="Phone" class="control-label">Phone <span style="color: #920040; font-weight: bold;">*</span></label>
+  <input type="tel" class="form-control-lg form-inline w-100" id="Phone" name="MobilePhone" placeholder="" required>
+ </div> 
+    
+ <div class="form-group"> <!-- State Button -->
+  <label for="LoanAmount" class="control-label">Loan Amount <span style="color: #920040; font-weight: bold;">*</span></label>
+  <select class="form-control-lg form-inline w-100" id="LoanAmount" name="Loan_Amount__c" required>
+                <option value="50000">$50000</option>
+<option value="60000">$60000</option>
+<option value="70000">$70000</option>
+<option value="80000">$80000</option>
+<option value="90000">$90000</option>
+<option value="100000">$100000</option>
+<option value="110000">$110000</option>
+<option value="120000">$120000</option>
+<option value="130000">$130000</option>
+<option value="140000">$140000</option>
+<option value="150000">$150000</option>
+<option value="160000">$160000</option>
+<option value="170000">$170000</option>
+<option value="180000">$180000</option>
+<option value="190000">$190000</option>
+<option value="200000">$200000</option>
+<option value="210000">$210000</option>
+<option value="220000">$220000</option>
+<option value="230000">$230000</option>
+<option value="240000">$240000</option>
+<option value="250000">$250000</option>
+<option value="260000">$260000</option>
+<option value="270000">$270000</option>
+<option value="280000">$280000</option>
+<option value="290000">$290000</option>
+<option value="300000">$300000</option>
+<option value="310000">$310000</option>
+<option value="320000">$320000</option>
+<option value="330000">$330000</option>
+<option value="340000">$340000</option>
+<option value="350000">$350000</option>
+<option value="360000">$360000</option>
+<option value="370000">$370000</option>
+<option value="380000">$380000</option>
+<option value="390000">$390000</option>
+<option value="400000">$400000</option>
+<option value="410000">$410000</option>
+<option value="420000">$420000</option>
+<option value="430000">$430000</option>
+<option value="440000">$440000</option>
+<option value="450000">$450000</option>
+<option value="460000">$460000</option>
+<option value="470000">$470000</option>
+<option value="480000">$480000</option>
+<option value="490000">$490000</option>
+<option value="500000">$500000</option>
+<option value="510000">$510000</option>
+<option value="520000">$520000</option>
+<option value="530000">$530000</option>
+<option value="540000">$540000</option>
+<option value="550000">$550000</option>
+<option value="560000">$560000</option>
+<option value="570000">$570000</option>
+<option value="580000">$580000</option>
+<option value="590000">$590000</option>
+<option value="600000">$600000</option>
+<option value="610000">$610000</option>
+<option value="620000">$620000</option>
+<option value="630000">$630000</option>
+<option value="640000">$640000</option>
+<option value="650000">$650000</option>
+<option value="660000">$660000</option>
+<option value="670000">$670000</option>
+<option value="680000">$680000</option>
+<option value="690000">$690000</option>
+<option value="700000">$700000</option>
+<option value="710000">$710000</option>
+<option value="720000">$720000</option>
+<option value="730000">$730000</option>
+<option value="740000">$740000</option>
+<option value="750000">$750000</option>
+<option value="760000">$760000</option>
+<option value="770000">$770000</option>
+<option value="780000">$780000</option>
+<option value="790000">$790000</option>
+<option value="800000">$800000</option>
+<option value="810000">$810000</option>
+<option value="820000">$820000</option>
+<option value="830000">$830000</option>
+<option value="840000">$840000</option>
+<option value="850000">$850000</option>
+<option value="860000">$860000</option>
+<option value="870000">$870000</option>
+<option value="880000">$880000</option>
+<option value="890000">$890000</option>
+<option value="900000">$900000</option>
+<option value="910000">$910000</option>
+<option value="920000">$920000</option>
+<option value="930000">$930000</option>
+<option value="940000">$940000</option>
+<option value="950000">$950000</option>
+<option value="960000">$960000</option>
+<option value="970000">$970000</option>
+<option value="980000">$980000</option>
+<option value="990000">$990000</option>
+<option value="1000000">$1000000</option>
+  </select>     
+ </div>         
+       
+ <div class="form-group"> <!-- State Button -->
+  <label for="state_id" class="control-label">Property State <span style="color: #920040; font-weight: bold;">*</span></label>
+  <select class="form-control-lg form-inline w-100" id="state_id" name="Property_State__c" required>
+   <option value="AL">Alabama</option>
+   <option value="AK">Alaska</option>
+   <option value="AZ">Arizona</option>
+   <option value="AR">Arkansas</option>
+   <option value="CA">California</option>
+   <option value="CO">Colorado</option>
+   <option value="CT">Connecticut</option>
+   <option value="DE">Delaware</option>
+   <option value="DC">District Of Columbia</option>
+   <option value="FL">Florida</option>
+   <option value="GA">Georgia</option>
+   <option value="HI">Hawaii</option>
+   <option value="ID">Idaho</option>
+   <option value="IL">Illinois</option>
+   <option value="IN">Indiana</option>
+   <option value="IA">Iowa</option>
+   <option value="KS">Kansas</option>
+   <option value="KY">Kentucky</option>
+   <option value="LA">Louisiana</option>
+   <option value="ME">Maine</option>
+   <option value="MD">Maryland</option>
+   <option value="MA">Massachusetts</option>
+   <option value="MI">Michigan</option>
+   <option value="MN">Minnesota</option>
+   <option value="MS">Mississippi</option>
+   <option value="MO">Missouri</option>
+   <option value="MT">Montana</option>
+   <option value="NE">Nebraska</option>
+   <option value="NV">Nevada</option>
+   <option value="NH">New Hampshire</option>
+   <option value="NJ">New Jersey</option>
+   <option value="NM">New Mexico</option>
+   <option value="NY">New York</option>
+   <option value="NC">North Carolina</option>
+   <option value="ND">North Dakota</option>
+   <option value="OH">Ohio</option>
+   <option value="OK">Oklahoma</option>
+   <option value="OR">Oregon</option>
+   <option value="PA">Pennsylvania</option>
+   <option value="RI">Rhode Island</option>
+   <option value="SC">South Carolina</option>
+   <option value="SD">South Dakota</option>
+   <option value="TN">Tennessee</option>
+   <option value="TX">Texas</option>
+   <option value="UT">Utah</option>
+   <option value="VT">Vermont</option>
+   <option value="VA">Virginia</option>
+   <option value="WA">Washington</option>
+   <option value="WV">West Virginia</option>
+   <option value="WI">Wisconsin</option>
+   <option value="WY">Wyoming</option>
+  </select>     
+ 
+ <div class="form-group mt-3"> <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary p-3 font-weight-bold" style="width: 100%">GET STARTED ONLINE</button>
+ </div>     
+ <div>
+    <input type="hidden" id="leadid_tcpa_disclosure" name="leadid_tcpa_disclosure" /><label for="leadid_tcpa_disclosure">[ENTER DESIRED OR SPECIFIED DISCLOSURE TEXT HERE]</label></div>
+    </div>
+    <div><input id="leadid_token" name="Jornaya_ID__c" type="hidden" value="36characters"/></div>
+</form>
+%%[ endif ]%%
+
+              </div>
+          </div>
+      </div>
+      
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

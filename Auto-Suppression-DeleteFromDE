@@ -14,3 +14,6 @@ Platform.Load("Core","1.1.1");
     };
 
 </script>
+
+
+CREDIT:https://salesforce.stackexchange.com/questions/236460/remove-subscribers-from-auto-suppression-list/236604

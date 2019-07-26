@@ -1,0 +1,3 @@
+<script runat="server">
+   var deleteRow = Platform.Function.DeleteData('AutoSuppressionExternalKey',['Email Address'],['sam@sample.com']);
+</script>

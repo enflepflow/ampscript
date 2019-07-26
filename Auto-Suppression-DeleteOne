@@ -1,3 +1,5 @@
 <script runat="server">
    var deleteRow = Platform.Function.DeleteData('AutoSuppressionExternalKey',['Email Address'],['sam@sample.com']);
 </script>
+
+CREDIT:https://salesforce.stackexchange.com/questions/236460/remove-subscribers-from-auto-suppression-list/236604

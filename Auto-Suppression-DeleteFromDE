@@ -1,0 +1,16 @@
+<script runat="server">
+
+Platform.Load("Core","1.1.1");
+
+     var deleteEmails = DataExtension.Init("toDelete");
+     var data = deleteEmails.Rows.Retrieve();
+
+     for (var i=0; i < data.length; i++) {
+
+       var email = data[i].Email;
+
+       var deleteRow = Platform.Function.DeleteData('AutoSuppressionExternalKey',['Email Address'],[email]);
+
+    };
+
+</script>

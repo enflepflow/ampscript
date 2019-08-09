@@ -1,0 +1,58 @@
+<h1> Daily Lead Form Fills </h1>
+
+<table width="100%">
+  <tr>
+    <td><strong>Date</strong></td>
+    <td><strong>Response</strong></td>
+    <td><strong>Email</strong></td>
+    <td><strong>Subservicer</strong></td>
+    <td><strong>UTM Source</strong></td>
+    <td><strong>UTM Medium</strong></td>
+    <td><strong>UTM Campaign</strong></td>
+  </tr>
+
+
+%%[
+var @dailyrows, @dailyrow, @dailyrowCount, @i
+
+set @dailyrows = LookupRows("Submission Attempts_Daily","Lead", "Yes")
+set @dailyrowCount = rowcount(@dailyrows)
+
+if @dailyrowCount > 0 then
+
+  for @i = 1 to @dailyrowCount do
+
+    var @Date_Time, @Email, @Provider__c, @utm_source, @utm_medium, @utm_campaign
+    set @dailyrow = row(@dailyrows, @i)
+    set @Date_Time = field(@dailyrow,"Date_Time")
+    set @Response = field(@dailyrow,"response")
+    set @Email = field(@dailyrow,"Email")
+    set @Subservicer_Name__c = field(@dailyrow,"Subservicer_Name__c")
+    set @utm_source = field(@dailyrow,"utm_source")
+    set @utm_medium = field(@dailyrow,"utm_medium")
+    set @utm_campaign = field(@dailyrow,"utm_campaign")
+
+    ]%%
+
+<tr>
+
+  <td>%%=v(@Date_Time)=%%</td>
+  <td>%%=v(@Response)=%%</td>
+  <td>%%=v(@Email)=%%</td>
+  <td>%%=v(@Subservicer_Name__c)=%%</td>
+  <td>%%=v(@utm_source)=%%</td>
+  <td>%%=v(@utm_medium)=%%</td>
+  <td> %%=v(@utm_campaign)=%%</td>
+
+  </tr><br>
+  
+    %%[
+
+  next @i ]%%
+
+%%[ else ]%%
+
+No rows found
+
+%%[ endif ]%%
+</table>
